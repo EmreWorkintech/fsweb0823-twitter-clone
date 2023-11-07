@@ -9,8 +9,8 @@ const Suggestions = () => {
 
   return (
     <div>
-      {suggestions.map((user) => (
-        <SuggestedUser user={user} />
+      {suggestions.map((user, index) => (
+        <SuggestedUser key={index} user={user} />
       ))}
     </div>
   );
