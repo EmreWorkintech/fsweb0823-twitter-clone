@@ -7,12 +7,13 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getTweets } from "./store/actions/tweetActions";
 import { axiosWithAuth } from "./api/axiosWithAuth";
+import { Redirect } from "react-router-dom";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     axiosWithAuth()
-      .get("tweets")
+      .get("tweets?orderBy=id&order=desc")
       .then((res) => {
         dispatch(getTweets(res.data));
       })
@@ -23,7 +24,10 @@ function App() {
       <Route exact path="/login">
         <WholePage />
       </Route>
-      <Route path="/">
+      <Route exact path="/">
+        <Redirect to="/feed" />
+      </Route>
+      <Route exact path="/feed">
         <ThreeColumn />
       </Route>
     </Switch>

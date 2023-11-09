@@ -12,6 +12,7 @@ LeftBar
 
 .leftBar-container {
     width: 25%;
+    padding: 1rem;
 }
 
 
@@ -25,7 +26,7 @@ Main
     width: 50%;
     border-left: 1px solid gray;
     border-right: 1px solid gray;
-    padding: 0 1rem;
+    padding: 1rem;
 }
 
 
@@ -38,4 +39,5 @@ RightBar
 
 .rightBar-container {
     width: 25%;
+    padding: 1rem;
 }

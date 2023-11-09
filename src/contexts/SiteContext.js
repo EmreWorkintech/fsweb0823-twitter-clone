@@ -1,11 +1,13 @@
 import { createContext, useState } from "react";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 export const SiteContext = createContext();
 
 export const SiteContextProvider = ({ children }) => {
-  const [lang, setLang] = useState("en");
-  const [theme, setTheme] = useState("light");
-  const [loggedUser, setLoggedUser] = useState(null);
+  const [lang, setLang] = useLocalStorage("lang", "en");
+  const [theme, setTheme] = useLocalStorage("theme", "light");
+  const [loggedUser, setLoggedUser] = useLocalStorage("user", null);
+  const [tweetToEdit, setTweetToEdit] = useState(null);
 
   const localizedTexts = {
     tr: { searchPage: { search_text: "Arama" } },
@@ -24,6 +26,8 @@ export const SiteContextProvider = ({ children }) => {
         texts,
         loggedUser,
         setLoggedUser,
+        tweetToEdit,
+        setTweetToEdit,
       }}
     >
       {children}
