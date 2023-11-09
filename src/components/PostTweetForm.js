@@ -6,13 +6,14 @@ import { postTweet, updateTweet } from "../store/actions/tweetActions";
 
 const PostTweetForm = () => {
   const { loggedUser, tweetToEdit } = useContext(SiteContext);
-  const [newTweet, setNewTweet] = useState({
+  const initialTweet = {
     tweet: "",
     like_count: 0,
     comment_count: 0,
     user: loggedUser.user,
     avatar: loggedUser.avatar,
-  });
+  };
+  const [newTweet, setNewTweet] = useState(initialTweet);
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
@@ -23,12 +24,14 @@ const PostTweetForm = () => {
         .put(`/tweets/${newTweet.id}`, newTweet)
         .then((res) => {
           dispatch(updateTweet(res.data));
+          setNewTweet(initialTweet);
         });
     } else {
       axiosWithAuth()
         .post(`/tweets`, newTweet)
         .then((res) => {
           dispatch(postTweet(res.data));
+          setNewTweet(initialTweet);
         });
     }
   };
