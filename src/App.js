@@ -4,15 +4,15 @@ import ThreeColumn from "./layouts/ThreeColumn/ThreeColumn";
 
 import "./App.css";
 import { useEffect } from "react";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getTweets } from "./store/actions/tweetActions";
+import { axiosWithAuth } from "./api/axiosWithAuth";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    axios
-      .get("https://6540a96145bedb25bfc247b4.mockapi.io/api/tweets")
+    axiosWithAuth()
+      .get("tweets")
       .then((res) => {
         dispatch(getTweets(res.data));
       })
