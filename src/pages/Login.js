@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { SiteContext } from "../contexts/SiteContext";
 import { useHistory } from "react-router-dom";
+import { axiosWithAuth } from "../api/axiosWithAuth";
 
 const Login = () => {
   const { setLoggedUser } = useContext(SiteContext);
@@ -17,16 +18,21 @@ const Login = () => {
   });
 
   const onFormSubmit = (formData, e) => {
-    setLoggedUser(formData);
-    localStorage.setItem("token", "kjhfjdhfjjfhdfjhdjfh");
-    console.log(formData);
-    e.target.reset();
-    push("/feed");
+    axiosWithAuth()
+      .get(`/login?search=${formData.username}`)
+      .then((res) => {
+        if (res.data[0].password === formData.password) {
+          setLoggedUser(res.data[0]);
+          localStorage.setItem("token", res.data[0].token);
+          e.target.reset();
+          push("/feed");
+        }
+      });
   };
 
   const maxLengthForPassword = (value) => {
-    if (value.length > 10) {
-      return "Şifreniz 10 karakterden fazla olamaz!";
+    if (value.length > 15) {
+      return "Şifreniz 15 karakterden fazla olamaz!";
     }
     return true;
   };
